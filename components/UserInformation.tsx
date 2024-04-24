@@ -30,6 +30,7 @@ async function UserInformation() {
                     <p className="font-semibold">
                         {firstName} {lastName}
                     </p>
+
                     <p className="text-xs">
                         @{firstName}
                         {lastName}-{user?.id?.slice(-4)}
@@ -47,6 +48,16 @@ async function UserInformation() {
                 </div>
             </SignedOut>
             <hr className="w-full border-gray-200 my-5" />
+
+            <div  className="flex justify-between w-full px-4 text-sm">
+                <p className="font-semibold text-gray-400">Posts</p>
+                <p className="text-blue-400">0</p>
+            </div>
+
+            <div className="flex justify-between px-4 w-full text-sm">
+                <p className="font-semibold text-gray-400">Comments</p>
+                <p className="text-blue-400">0</p>
+            </div>
         </div>
     )
 }

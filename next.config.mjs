@@ -13,7 +13,7 @@ const nextConfig = {
             // need to change this later
             {
                 protocol: 'https',
-                hostname: 'image.tmdb.org',
+                hostname: 'linkedinclone.blob.core.windows.net',
             }
         ]
     }

@@ -1,6 +1,10 @@
+import Post from "./Post"
+
 function PostFeed() {
   return (
-    <div>PostFeed</div>
+    <div>
+        <Post />
+    </div>
   )
 }
 

@@ -21,7 +21,7 @@ export default function Home() {
       </section>
 
       <section className="hidden xl:inline justify-center col-span-2">
-
+      {/* Widget */}
       </section>
     </div>
   );

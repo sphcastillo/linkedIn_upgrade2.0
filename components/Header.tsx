@@ -27,24 +27,25 @@ function Header() {
         </div>
 
         <div className="flex items-center space-x-4 px-6">
-            <Link href='' className="icon">
+
+            <Link href='/' className="icon">
                 <HomeIcon className="h-5" />
                 <p>Home</p>
             </Link>
 
-            <Link href='' className="icon hidden md:flex">
+            <Link href='/' className="icon hidden md:flex">
                 <UsersIcon className="h-5" />
                 <p>Network</p>
             </Link>
 
-            <Link href='' className="icon hidden md:flex">
+            <Link href='/' className="icon hidden md:flex">
                 <Briefcase className="h-5" />
                 <p>Jobs</p>
             </Link>
 
-            <Link href='' className="icon">
+            <Link href='/' className="icon">
                 <MessagesSquare className="h-5" />
-                <p>Messenging</p>
+                <p>Messaging</p>
             </Link>
 
             <SignedIn>
@@ -52,7 +53,7 @@ function Header() {
             </SignedIn>
 
             <SignedOut>
-                <Button asChild>
+                <Button asChild variant='secondary'>
                     <SignInButton />
                 </Button>
             </SignedOut>
