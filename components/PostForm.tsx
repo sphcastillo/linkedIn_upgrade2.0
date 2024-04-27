@@ -4,14 +4,14 @@ import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "./ui/button";
 import { useRef, useState } from "react";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, XIcon } from "lucide-react";
 
 
 function PostForm() {
     const { user } = useUser();
     const ref= useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [preview, setPreview] = useState<string | null >(null);
+    const [preview, setPreview] = useState<string | null>(null);
 
     const handlePostAction = async (formData: FormData) => {
         const formDataCopy  = formData;
@@ -22,10 +22,10 @@ function PostForm() {
     }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // const file = event.target.files[0];
-        // if(file){
-        //     setPreview(URL.createObjectURL(file))
-        // }
+        const file = event.target.files?.[0];
+        if(file){
+            setPreview(URL.createObjectURL(file));
+        }
     }
 
     return (
@@ -42,7 +42,7 @@ function PostForm() {
 
                     <input 
                         type="text" 
-                        name='posttInput'
+                        name='postInput'
                         placeholder="Start writing a post..." 
                         className="flex-1 outline-none rounded-full py-3 px-4 border"
                     />
@@ -72,9 +72,16 @@ function PostForm() {
 
                 <div className="flex justify-end mt-2 space-x-2">
                     <Button type="button" onClick={() => fileInputRef.current?.click()}>
-                        <ImageIcon className="mr-2" size={16}/>
-                        Add
+                        <ImageIcon color="currentColor" className="mr-2" size={16}/>
+                        {preview ? "Change" : "Add"} image
                     </Button>
+
+                    {preview && (
+                        <Button variant="outline">
+                            <XIcon className="mr-2" size={16}  color="currentColor"/>
+                            Remove image
+                        </Button>
+                    )}
                 </div>
             </form>
         </div>
