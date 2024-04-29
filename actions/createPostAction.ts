@@ -25,37 +25,37 @@ export default async function createPostAction(formData: FormData){
     }
 
     // define user
-    // const userDB: IUser = {
-    //     userId: user.id,
-    //     userImage: user.imageUrl,
-    //     firstName: user.firstName || "",
-    //     lastName: user.lastName  || "",
-    // }
 
-    // try{
-    //     if(image.size > 0){
-    //         // 1. upload image if there is one - MS Blob storage
-    //         console.log("Attention: Uplaoding image to Azure Blob Storage...", image);
-    //         // create post in database with image
-    //         const body: AddPostRequestBody = {
-    //             user: userDB,
-    //             text: postInput,
-    //             imageUrl: image_url,
-    //         }
-    //         await Post.create(body);
-    //     }else {
-    //         // create post in database without image
+    const userDB: IUser = {
+        userId: user.id,
+        userImage: user.imageUrl,
+        firstName: user.firstName || "",
+        lastName: user.lastName  || "",
+    }
 
-    //         const body = {
-    //             user: userDB,
-    //             text: postInput
-    //         }
+    try{
+        if(image.size > 0){
+            // 1. upload image if there is one - MS Blob storage
+            // console.log("Attention: Uplaoding image to Azure Blob Storage...", image);
+            // 2. create post in database with image
+            const body: AddPostRequestBody = {
+                user: userDB,
+                text: postInput,
+            }
+            // await Post.create(body);
+        }else {
+            // 1. create post in database without image
 
-    //         await Post.create(body);
-    //     }
-    // } catch (error){
-    //     console.log("Attention: Error when creating post", error);
-    // }
+            const body = {
+                user: userDB,
+                text: postInput
+            }
+
+            await Post.create(body);
+        }
+    } catch (error: any){
+        throw new Error("Attention: Error creating post: " + error.message);
+    }
 
     // upload image if there is one
     // create post in database
