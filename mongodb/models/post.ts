@@ -25,6 +25,7 @@ interface IPostMethods {
 }
 
 // Define the static methods
+// this does not belong to a single instance of a post, but to all posts
 interface IPostStatics {
     getAllPosts(): Promise<IPostDocument[]>;
 }
@@ -50,9 +51,10 @@ const PostSchema = new Schema<IPostDocument>(
     }
 );
 
-// using a try/catch, update the post likes array with the userId
+// using a try/catch, call the update the post likes array with the userId
 PostSchema.methods.likePost = async function (userId: string) {
     try {
+      // updateOne: uses the $addToSet operator to add the userId to the likes array
       await this.updateOne({ $addToSet: { likes: userId } });
     } catch (error) {
       console.log("Attention: Error when liking post", error);
@@ -67,8 +69,11 @@ PostSchema.methods.unlikePost = async function (userId: string) {
     }
 };
 
+// remove the post and all its comments
+
 PostSchema.methods.removePost = async function () {
     try {
+      // access the Post model and deleting with the id
       await this.model("Post").deleteOne({ _id: this._id });
     } catch (error) {
       console.log("Attenttion: Error when removing post", error);
@@ -76,6 +81,7 @@ PostSchema.methods.removePost = async function () {
 };
 
 PostSchema.methods.commentOnPost = async function (commentToAdd: ICommentBase) {
+   // create a new comment and add it to the post's comments array
     try {
       const comment = await Comment.create(commentToAdd);
       this.comments.push(comment._id);
@@ -101,7 +107,7 @@ PostSchema.statics.getAllPosts = async function () {
       return posts.map((post: IPostDocument) => ({
         ...post,
         _id: post._id.toString(),
-        comments: post.comments?.map((comment: IComment) => ({
+        comments: post.comments?.map((comment: IComment) => ({ 
           ...comment,
           _id: comment._id.toString(),
         })),
@@ -124,6 +130,8 @@ PostSchema.methods.getAllComments = async function () {
     }
   };
 
+// check if the model is already defined, if not, create it
 export const Post =
   (models.Post as IPostModel) ||
   mongoose.model<IPostDocument, IPostModel>("Post", PostSchema);
+

@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "./ui/button";
 import { useRef, useState } from "react";
 import { ImageIcon, XIcon } from "lucide-react";
+import createPostAction from "@/actions/createPostAction";
 
 
 function PostForm() {
@@ -18,6 +19,17 @@ function PostForm() {
         ref.current?.reset();
 
         const text = formDataCopy.get("postInput") as string;
+        if(!text.trim()) {
+            throw new Error("Post input is required!");
+        }
+        setPreview(null);
+
+        try {
+            await createPostAction(formDataCopy);
+        } catch(error){
+            
+            console.log("Error creating post: ", error);
+        }
 
     }
 
@@ -30,7 +42,15 @@ function PostForm() {
 
     return (
         <div className="mb-2">
-            <form action='' ref={ref} className="p-3 bg-white rounded-lg border">
+            <form 
+                action={(formData)  => {
+                    // Handle form submission with server action
+                    handlePostAction(formData);
+                    // Toast notification based on the promise above
+                }}
+                ref={ref} 
+                className="p-3 bg-white rounded-lg border"
+            >
                 <div className="flex items-center space-x-2">
                     <Avatar>
                         <AvatarImage src={user?.imageUrl}/>
@@ -77,13 +97,15 @@ function PostForm() {
                     </Button>
 
                     {preview && (
-                        <Button variant="outline">
+                        <Button variant="outline" type="button" onClick={()  => setPreview(null)}>
                             <XIcon className="mr-2" size={16}  color="currentColor"/>
                             Remove image
                         </Button>
                     )}
                 </div>
             </form>
+
+            <hr className="mt-2 border-gray-300"/>
         </div>
     )
 }

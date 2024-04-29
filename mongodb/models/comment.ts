@@ -27,5 +27,6 @@ const CommentSchema = new Schema<IComment>(
     }
 )
 
+// if already initialized: use that , otherwise create a new one
 export const Comment =
   models.Comment || mongoose.model<IComment>("Comment", CommentSchema);
