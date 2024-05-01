@@ -28,7 +28,7 @@ function PostForm() {
             await createPostAction(formDataCopy);
         } catch(error){
             
-            console.log("Error creating post: ", error);
+            console.error(`Error creating post: ${error}`);
         }
 
     }
@@ -110,4 +110,4 @@ function PostForm() {
     )
 }
 
-export default PostForm
+export default PostForm;

@@ -13,12 +13,11 @@ export interface AddPostRequestBody {
 // Protected endpoint
 export async function POST(request: Request) {
     // protect the route with Clerk's auth middleware
-    auth().protect();
-    // pass in 
+    // auth().protect();
+    const { user, text, imageUrl }: AddPostRequestBody = await request.json();
 
     try {
         await connectDB();
-        const  { user, text, imageUrl }:  AddPostRequestBody = await request.json();
 
         // if there is an image, upload it to Azure Blob Storage
         const postData: IPostBase = {
