@@ -81,5 +81,6 @@ export default async function createPostAction(formData: FormData) {
     console.error("Error occurred while creating post: ", error.message);
   }
 
-//   revalidatePath("/");
+  // once uploaded, the post will be created and the cache will be revalidated
+  revalidatePath("/");
 }
