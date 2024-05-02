@@ -44,8 +44,33 @@ function PostOptions({ post }:  { post: IPostDocument }) {
         setLiked(!liked);
         setLikes(newLikes);
 
-        // const response = await fetch()
-    }
+        const response = await fetch(
+            `/api/posts/${post._id}/${liked ? 'unlike' : 'like'}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+        );
+
+        if(!response.ok){
+            setLiked(originalLiked);
+            setLikes(originalLikes);
+            throw new Error("Failed to like/unlike post");
+        }
+
+        const fetchLikesResponse = await fetch(`/api/posts/${post._id}/like`);
+        if(!fetchLikesResponse.ok){
+            setLiked(originalLiked);
+            setLikes(originalLikes);
+            throw new Error("Failed to fetch likes");
+        }
+
+        const newLikedData = await fetchLikesResponse.json();
+        setLikes(newLikedData);
+    };
     
     return (
         <div>
@@ -77,7 +102,7 @@ function PostOptions({ post }:  { post: IPostDocument }) {
                     onClick={likeOrUnlikePost}
                 >
                     <ThumbsUpIcon 
-                        
+                        className={cn("mr-1", liked && "text-[#4881c2] fill-[#4881c2]")}
                     />
                     Like
                 </Button>

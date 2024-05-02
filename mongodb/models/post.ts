@@ -76,7 +76,7 @@ PostSchema.methods.removePost = async function () {
       // access the Post model and deleting with the id
       await this.model("Post").deleteOne({ _id: this._id });
     } catch (error) {
-      console.log("Attenttion: Error when removing post", error);
+      console.log("Attention: Error when removing post", error);
     }
 };
 

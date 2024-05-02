@@ -43,7 +43,7 @@ FollowersSchema.methods.unfollow = async function () {
   try {
     await this.deleteOne({ _id: this._id });
   } catch (error) {
-    console.log("error when unfollowing", error);
+    console.log("Attention: Error when unfollowing", error);
   }
 };
 
@@ -61,7 +61,7 @@ FollowersSchema.statics.follow = async function (
     const follow = await this.create({ follower, following });
     return follow;
   } catch (error) {
-    console.log("error when following", error);
+    console.log("Error when attempting to follow", error);
   }
 };
 
@@ -70,7 +70,7 @@ FollowersSchema.statics.getAllFollowers = async function (userId: string) {
     const followers = await this.find({ following: userId });
     return followers;
   } catch (error) {
-    console.log("error when getting all followers", error);
+    console.log("Error when getting all followers", error);
   }
 };
 
@@ -79,7 +79,7 @@ FollowersSchema.statics.getAllFollowing = async function (userId: string) {
     const following = await this.find({ follower: userId });
     return following;
   } catch (error) {
-    console.log("error when getting all following", error);
+    console.log("Error when getting all following", error);
   }
 };
 
