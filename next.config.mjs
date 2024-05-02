@@ -13,7 +13,7 @@ const nextConfig = {
             // need to change this later
             {
                 protocol: 'https',
-                hostname: 'linkedinclone.blob.core.windows.net',
+                hostname: 'linkedinupgrade.blob.core.windows.net',
             }
         ]
     }

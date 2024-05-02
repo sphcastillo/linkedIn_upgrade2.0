@@ -12,4 +12,4 @@ function PostFeed({ posts }:  { posts: IPostDocument[]}) {
   )
 }
 
-export default PostFeed
+export default PostFeed;

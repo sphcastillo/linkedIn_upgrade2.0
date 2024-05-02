@@ -7,6 +7,8 @@ import { IPostDocument } from "@/mongodb/models/post"
 import { useUser } from "@clerk/nextjs"
 import ReactTimeAgo from "react-timeago"
 import deletePostAction from "@/actions/deletePostAction"
+import Image from "next/image"
+import PostOptions from "./PostOptions"
 
 
 function Post({ post } : { post: IPostDocument }) {
@@ -62,10 +64,26 @@ function Post({ post } : { post: IPostDocument }) {
                     </Button>
                     )}
 
-            </div>
+                </div>
             </div>
 
+            <div>
+                <p className="px-4  pb-2 mt-2">{post.text}</p>
 
+                {/** If image uploaded - put it here ...  */}
+            
+                {post.imageUrl && (
+                    <Image 
+                        className="w-full mx-auto"
+                        height={500}
+                        width={500}
+                        alt="Post Image"
+                        src={post.imageUrl}
+                    />
+                )}
+            </div>
+            {/** PostOptions */}
+            <PostOptions post={post} />
         </div>
     )
 }
