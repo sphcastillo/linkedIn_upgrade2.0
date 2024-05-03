@@ -43,7 +43,7 @@ function Header() {
                 <p>Jobs</p>
             </Link>
 
-            <Link href='/' className="icon">
+            <Link href='/' className="icon hidden md:flex">
                 <MessagesSquare className="h-5" />
                 <p>Messaging</p>
             </Link>
