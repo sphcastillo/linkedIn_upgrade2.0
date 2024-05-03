@@ -34,7 +34,7 @@ export default async function createPostAction(formData: FormData) {
   try {
     if (image.size > 0) {
       // 1. If exists, upload the image to MS Blob Storage
-      console.log("Uploading image to Azure Blob Storage...", image);
+      // console.log("Uploading image to Azure Blob Storage...", image);
 
       const accountName = process.env.AZURE_STORAGE_NAME;
 
@@ -59,7 +59,7 @@ export default async function createPostAction(formData: FormData) {
       // return url of the image
       image_url = res._response.request.url;
 
-      console.log("File uploaded successfully!: ", image_url);
+      // console.log("File uploaded successfully!: ", image_url);
       // 2. Create a new post with the image URL
       const body: AddPostRequestBody = {
         user: userDB,
@@ -78,7 +78,7 @@ export default async function createPostAction(formData: FormData) {
       await Post.create(body);
     }
   } catch (error: any) {
-    console.error("Error occurred while creating post: ", error.message);
+    // console.error("Error occurred while creating post: ", error.message);
   }
 
   // once uploaded, the post will be created and the cache will be revalidated
