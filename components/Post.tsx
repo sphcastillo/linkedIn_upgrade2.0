@@ -9,6 +9,7 @@ import ReactTimeAgo from "react-timeago"
 import deletePostAction from "@/actions/deletePostAction"
 import Image from "next/image"
 import PostOptions from "./PostOptions"
+import { toast } from "sonner"
 
 
 function Post({ post } : { post: IPostDocument }) {
@@ -58,6 +59,11 @@ function Post({ post } : { post: IPostDocument }) {
                             const promise = deletePostAction(post._id);
 
                             // Toast notification based on the promise above
+                            toast.promise(promise, {
+                                loading: "Deleting post...",
+                                success: "Post deleted",
+                                error: "Failed to delete post",
+                            });
                         }}
                     >
                         <Trash2 />
@@ -82,8 +88,7 @@ function Post({ post } : { post: IPostDocument }) {
                     />
                 )}
             </div>
-            {/** PostOptions */}
-            <PostOptions post={post} />
+            <PostOptions postId={post._id} post={post} />
         </div>
     )
 }
