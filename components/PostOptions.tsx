@@ -1,7 +1,7 @@
 'use client'
 
 import { IPostDocument } from "@/mongodb/models/post";
-import { SignedIn, useUser } from "@clerk/nextjs";
+import { useUser, SignedIn } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { MessageCircle, Repeat2, Send, ThumbsUpIcon } from "lucide-react";
@@ -19,7 +19,11 @@ function PostOptions({
     post: IPostDocument 
 }) {
     const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+    console.log("isCommentsOpen", isCommentsOpen);
+    
     const { user } = useUser();
+    console.log("user", user);
+    console.log("user?.id", user?.id);
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(post.likes);
 
@@ -31,7 +35,7 @@ function PostOptions({
     }, [post, user]);
 
     // prime example of where we do an API call -> to our Like endpoint
-    const likeOrUnlikePost = async() =>  {
+    const likeOrUnlikePost = async () =>  {
         if(!user?.id){
             throw new Error("User not authenticated");
         }
@@ -115,7 +119,11 @@ function PostOptions({
                     Like
                 </Button>
 
-                <Button variant="ghost" className="postButton">
+                <Button 
+                    variant="ghost" 
+                    className="postButton"
+                    onClick={() => setIsCommentsOpen(!isCommentsOpen)}
+                >
                     <MessageCircle 
                         className={cn('mr-1', isCommentsOpen && 'text-gray-600 fill-gray-600')}
                     />
@@ -135,10 +143,14 @@ function PostOptions({
 
             {isCommentsOpen && (
                 <div className="p-4">
-                    {user?.id && <CommentForm postId={postId} />}
+                    <SignedIn>
+                        <CommentForm postId={post._id}/>
+                    </SignedIn>
                     <CommentFeed post={post}/>
                 </div>
             )}
+
+
         </div>
     )
 }
