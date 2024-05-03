@@ -12,7 +12,7 @@ export const revalidate = 0;
 export default async function Home() {
   await connectDB();
   const posts = await Post.getAllPosts();
-  console.log("posts", posts);
+  // console.log("posts", posts);
   return (
     <div className="grid grid-cols-8 mt-5 sm:px-5">
 

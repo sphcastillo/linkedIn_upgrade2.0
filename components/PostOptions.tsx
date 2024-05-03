@@ -120,7 +120,7 @@ function PostOptions({
                         })
                     }}
                 >
-                    {/* if user liked the post, show the thumbs up icon */}
+
                     <ThumbsUpIcon 
                         className={cn("mr-1", liked && "text-[#4881c2] fill-[#4881c2]")}
                     />
@@ -138,10 +138,12 @@ function PostOptions({
                     Comment
                 </Button>
 
-                <Button variant="ghost" className="postButton">
-                    <Repeat2 className="mr-1"/>
-                    Repost
-                </Button>
+                <div className="hidden md:flex">  
+                    <Button variant="ghost" className="postButton">
+                        <Repeat2 className="mr-1"/>
+                        Repost
+                    </Button>
+                </div> 
 
                 <Button variant="ghost" className="postButton">
                     <Send className="mr-1"/>
