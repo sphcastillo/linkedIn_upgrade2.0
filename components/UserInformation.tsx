@@ -2,14 +2,23 @@ import { currentUser } from "@clerk/nextjs/server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
+import { IPostDocument } from "@/mongodb/models/post";
 
 
-async function UserInformation() {
+async function UserInformation({ posts }: { posts: IPostDocument[] }) {
     const user = await currentUser();
 
     const firstName = user?.firstName as string;
     const lastName = user?.lastName  as string;
     const imageUrl = user?.imageUrl as string;
+
+    const userPosts = posts?.filter((post) => post.user.userId === user?.id);
+
+    const userComments = posts.flatMap(
+        (post) => 
+            post?.comments?.filter((comment) => comment.user.userId === user?.id) || []
+    );
+    
     return (
         <div  className="flex flex-col justify-center items-center bg-white mr-6 rounded-lg border py-4">
             <Avatar className="h-16 w-16 mb-5">
@@ -51,15 +60,15 @@ async function UserInformation() {
 
             <div  className="flex justify-between w-full px-4 text-sm">
                 <p className="font-semibold text-gray-400">Posts</p>
-                <p className="text-blue-400">0</p>
+                <p className="text-blue-400">{userPosts.length}</p>
             </div>
 
             <div className="flex justify-between px-4 w-full text-sm">
                 <p className="font-semibold text-gray-400">Comments</p>
-                <p className="text-blue-400">0</p>
+                <p className="text-blue-400">{userComments.length}</p>
             </div>
         </div>
     )
 }
 
-export default UserInformation
+export default UserInformation;
